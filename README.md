@@ -73,5 +73,7 @@ Then browse from localhost:8080
 
 
 ### Udacity Honor Codes:
-1. Some code implementations are learned from: https://github.com/KushalGH/boilerPlateDAPPproject 
+1. Some code implementations are learned from: https://github.com/KushalGH/boilerPlateDAPPproject ans https://github.com/g7845123/boilerPlateDAPPproject
 2. Some coding ideas are taken from : https://knowledge.udacity.com/questions/21638
+3. Thanks for reply at: https://knowledge.udacity.com/questions/24967
+4. Thanks for reply at : https://knowledge.udacity.com/questions/20798
