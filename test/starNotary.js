@@ -1,5 +1,5 @@
 //import 'babel-polyfill';
-const StarNotary = artifacts.require('./starNotary.sol')
+const StarNotary = artifacts.require('./StarNotary.sol')
 
 let instance;
 let accounts;
@@ -64,7 +64,66 @@ contract('StarNotary', async (accs) => {
   });
 
   // Write Tests for:
-
 // 1) The token name and token symbol are added properly.
+
+  it('token name and symbol added properly', async() => {
+      
+    // token name and symbols
+    assert.equal(await instance.name.call(), 'vasuCoin');
+    assert.equal(await instance.symbol.call(), 'VASU');
+      
+    let tokenId = 6;
+      
+    //create a star at account[0]  
+    await instance.createStar('vasustar 1', tokenId, {from:accounts[0]})
+      
+    // checking star name too
+    let starName = await instance.lookupTokenIdToStarInfo(tokenId, {from:accounts[0]});
+    assert.equal(starName, 'vasustar 1');  
+      
+  });
+
+
+
+
 // 2) 2 users can exchange their stars.
+  it('two users can exchange their stars', async() => {
+    let token1 = 7;
+    let token2 = 8;
+      
+    // create 2 seperate star
+    await instance.createStar('vasustar 2', token1, {from:accounts[0]})
+    await instance.createStar('namoonastar 2', token2, {from:accounts[1]})
+      
+    //get them exchanged  
+    await instance.exchangeStars(token1, token2);
+      
+    // check if onwer are exchanged  
+    assert.equal(await instance.ownerOf.call(token1), accounts[1]);
+    assert.equal(await instance.ownerOf.call(token2), accounts[0]);
+  });
+
+
+
+
 // 3) Stars Tokens can be transferred from one address to another.
+  it('Stars Tokens can be transferred from one address to another', async() => {
+      
+    let token1 = 9;
+      
+    let receiver = accounts[1];
+      
+    //create star at account[0]
+    await instance.createStar('vasustar 3', token1, {from:accounts[0]})
+      
+    // transfer to account[1]
+    await instance.transferStar(receiver, token1, {from:accounts[0]});
+      
+    //check the owner
+    assert.equal(await instance.ownerOf.call(token1), receiver);
+});
+
+
+
+
+
